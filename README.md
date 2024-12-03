@@ -119,6 +119,6 @@ https://documenter.getpostman.com/view/40090331/2sAYBa88jG
 
 
 # ERD
-![Uploading 스크린샷 2024-12-03 오후 4.09.54.png…]()
+<img width="443" alt="erd" src="https://github.com/user-attachments/assets/725dd144-a82e-4b83-bcdd-c8d3863881b7">
 
 
