@@ -28,6 +28,7 @@ Response
 }
 ```
 
+
 ### 2. 일정 조회
 - Method: GET
 - URL: api/schedules/{id}
@@ -44,6 +45,7 @@ Response
     "edit_date": "수정된 날짜"
 }
 ```
+
 
 ### 3. 일정 목록조회
 - Method: GET
@@ -73,6 +75,7 @@ Response
 ]
 ```
 
+
 ### 4. 일정 수정
 - Method: PATCH
 - URL: api/schedules/{id}
@@ -99,6 +102,7 @@ Response
 }
 ```
 
+
 ### 4. 일정 삭제
 - Method: DELETE
 - URL: api/schedules/{id}
@@ -110,3 +114,5 @@ Response
 }
 ```
 
+#### POSTMAN LINK
+https://documenter.getpostman.com/view/40090331/2sAYBa88jG
