@@ -2,8 +2,8 @@
 
 
 ### 1. 일정 등록
-Method: POST
-URL: api/schedules
+- Method: POST
+- URL: api/schedules
 
 Request
 ```
@@ -29,8 +29,8 @@ Response
 ```
 
 ### 2. 일정 조회
-Method: GET
-URL: api/schedules/{id}
+- Method: GET
+- URL: api/schedules/{id}
 
 Response
 ```
@@ -46,8 +46,8 @@ Response
 ```
 
 ### 3. 일정 목록조회
-Method: GET
-URL: api/schedules
+- Method: GET
+- URL: api/schedules
 
 Response
 ```
@@ -74,8 +74,8 @@ Response
 ```
 
 ### 4. 일정 수정
-Method: PATCH
-URL: api/schedules/{id}
+- Method: PATCH
+- URL: api/schedules/{id}
 
 Request
 ```
@@ -100,8 +100,8 @@ Response
 ```
 
 ### 4. 일정 삭제
-Method: DELETE
-URL: api/schedules/{id}
+- Method: DELETE
+- URL: api/schedules/{id}
 
 Response
 ```
