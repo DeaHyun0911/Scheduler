@@ -116,3 +116,9 @@ Response
 
 #### POSTMAN LINK
 https://documenter.getpostman.com/view/40090331/2sAYBa88jG
+
+
+# ERD
+![Uploading 스크린샷 2024-12-03 오후 4.09.54.png…]()
+
+
