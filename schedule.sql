@@ -5,8 +5,10 @@ CREATE TABLE `Schedule` (
 	`contents`	VARCHAR(200)	NOT NULL,
 	`create_date`	DATETIME	NOT NULL,
 	`edit_date`	DATETIME	NOT NULL,
-	`user_id`	BIGINT	NOT NULL	DEFAULT AUTO_INCREMENT,
-	`user_name`	VARCHER(50)	NOT NULL
+	`user_id` BIGINT,
+	`user_name`	VARCHER(50)	NOT NULL,
+	FOREIGN KEY (user_id)
+	REFERENCES User(user_id)
 );
 
 CREATE TABLE `User` (
@@ -16,11 +18,3 @@ CREATE TABLE `User` (
 	`create_date`	DATETIME	NOT NULL
 );
 
-ALTER TABLE `Schedule` ADD CONSTRAINT `PK_SCHEDULE` PRIMARY KEY (
-	`schedule_id`
-);
-
-ALTER TABLE `User` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
-	`user_id`,
-	`user_name`
-);
