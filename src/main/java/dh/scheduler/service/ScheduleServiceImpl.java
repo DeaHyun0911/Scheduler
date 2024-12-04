@@ -4,9 +4,12 @@ import dh.scheduler.dto.ScheduleRequestDto;
 import dh.scheduler.dto.ScheduleResponseDto;
 import dh.scheduler.entity.Schedule;
 import dh.scheduler.repository.ScheduleRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,4 +67,20 @@ public class ScheduleServiceImpl implements ScheduleService{
 
         return findList;
     }
+
+    @Override
+    public ScheduleResponseDto updateSchedule(Long id, String name, String contents, String password) {
+
+        if (!password.equals(scheduleRepository.findScheduleById(id).getPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 틀립니다.");
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        scheduleRepository.updateSchedule(id, name, contents, now);
+        Schedule schedule = scheduleRepository.findScheduleById(id);
+
+        return new ScheduleResponseDto(schedule);
+    }
+
+
 }

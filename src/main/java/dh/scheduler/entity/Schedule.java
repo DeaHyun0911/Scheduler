@@ -30,4 +30,5 @@ public class Schedule {
         LocalDateTime now = LocalDateTime.now();
         return this.createDate = now;
     }
+
 }
