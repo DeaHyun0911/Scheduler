@@ -30,7 +30,6 @@ public class ScheduleController {
         return new ResponseEntity<>(scheduleService.saveSchedule(requestDto), HttpStatus.CREATED);
     }
 
-
     /**
      * 선택 일정 조회 API
      * @param id 선택한 id 식별자
