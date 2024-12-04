@@ -81,6 +81,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
         return jdbcTemplate.query("select * from Schedule", scheduleRowMappers());
     }
 
+
     @Override
     public int updateSchedule(Long id, String name, String contents, LocalDateTime now) {
         return jdbcTemplate.update("update Schedule set user_name = ?, contents = ?, update_date = ? where id = ?", name, contents, now, id);
