@@ -82,5 +82,15 @@ public class ScheduleServiceImpl implements ScheduleService{
         return new ScheduleResponseDto(schedule);
     }
 
+    @Override
+    public void deleteSchedule(Long id) {
+
+        int deleteRow = scheduleRepository.deleteSchedule(id);
+
+        if (deleteRow == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id를 찾을 수 없습니다.");
+        }
+    }
+
 
 }

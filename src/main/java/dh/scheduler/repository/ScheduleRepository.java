@@ -22,4 +22,6 @@ public interface ScheduleRepository {
 
     int updateSchedule(Long id, String name, String contents, LocalDateTime now);
 
+    int deleteSchedule(Long id);
+
 }
