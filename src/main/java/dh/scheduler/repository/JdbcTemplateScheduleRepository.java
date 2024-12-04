@@ -13,11 +13,10 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Repository
 public class JdbcTemplateScheduleRepository implements ScheduleRepository {
@@ -63,9 +62,30 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public List<ScheduleResponseDto> findListSchedules(String date, String name) {
-        return jdbcTemplate.query("select * from Schedule where user_name = ? or date(update_date) = ?", scheduleRowMappers(), name, date);
+    public List<ScheduleResponseDto> findScheduleListByDate(String date) {
+        return jdbcTemplate.query("select * from Schedule where date(update_date) = ?", scheduleRowMappers(), date);
     }
+
+    @Override
+    public List<ScheduleResponseDto> findScheduleListByName(String name) {
+        return jdbcTemplate.query("select * from Schedule where user_name = ?", scheduleRowMappers(), name);
+    }
+
+    @Override
+    public List<ScheduleResponseDto> findScheduleListByNameWithDate(String date, String name) {
+        return jdbcTemplate.query("select * from Schedule where user_name = ? and date(update_date) = ?", scheduleRowMappers(), name, date);
+    }
+
+    @Override
+    public List<ScheduleResponseDto> findAllScheduleLists() {
+        return jdbcTemplate.query("select * from Schedule", scheduleRowMappers());
+    }
+
+    @Override
+    public int updateSchedule(Long id, String name, String contents, LocalDateTime now) {
+        return jdbcTemplate.update("update Schedule set user_name = ?, contents = ?, update_date = ? where id = ?", name, contents, now, id);
+    }
+
 
     private RowMapper<Schedule> scheduleRowMapper() {
         return new RowMapper<Schedule>() {

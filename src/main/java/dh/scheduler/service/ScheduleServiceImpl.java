@@ -4,10 +4,14 @@ import dh.scheduler.dto.ScheduleRequestDto;
 import dh.scheduler.dto.ScheduleResponseDto;
 import dh.scheduler.entity.Schedule;
 import dh.scheduler.repository.ScheduleRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,6 +47,40 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public List<ScheduleResponseDto> findListSchedules(String date, String name) {
 
-        return scheduleRepository.findListSchedules(date, name);
+        List<ScheduleResponseDto> findList = new ArrayList<>();
+
+        if(name == null || date == null) {
+            findList = scheduleRepository.findAllScheduleLists();
+        }
+
+        if(name != null || date != null) {
+            findList = scheduleRepository.findScheduleListByNameWithDate(date, name);
+        }
+
+        if (name != null) {
+            findList = scheduleRepository.findScheduleListByName(name);
+        }
+
+        if (date != null) {
+            findList = scheduleRepository.findScheduleListByDate(date);
+        }
+
+        return findList;
     }
+
+    @Override
+    public ScheduleResponseDto updateSchedule(Long id, String name, String contents, String password) {
+
+        if (!password.equals(scheduleRepository.findScheduleById(id).getPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 틀립니다.");
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        scheduleRepository.updateSchedule(id, name, contents, now);
+        Schedule schedule = scheduleRepository.findScheduleById(id);
+
+        return new ScheduleResponseDto(schedule);
+    }
+
+
 }

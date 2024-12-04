@@ -30,7 +30,6 @@ public class ScheduleController {
         return new ResponseEntity<>(scheduleService.saveSchedule(requestDto), HttpStatus.CREATED);
     }
 
-
     /**
      * 선택 일정 조회 API
      * @param id 선택한 id 식별자
@@ -48,5 +47,13 @@ public class ScheduleController {
             @RequestParam(required = false) String name
             ) {
         return new ResponseEntity<>(scheduleService.findListSchedules(date, name), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> updateSchedule(
+            @PathVariable Long id,
+            @RequestBody ScheduleRequestDto requestDto
+            ) {
+        return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto.getUserName(), requestDto.getContents(), requestDto.getPassword()), HttpStatus.OK);
     }
 }

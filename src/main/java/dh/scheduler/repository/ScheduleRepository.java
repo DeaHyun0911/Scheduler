@@ -3,7 +3,7 @@ package dh.scheduler.repository;
 import dh.scheduler.dto.ScheduleResponseDto;
 import dh.scheduler.entity.Schedule;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ScheduleRepository {
@@ -12,5 +12,14 @@ public interface ScheduleRepository {
 
     Schedule findScheduleById(Long id);
 
-    List<ScheduleResponseDto> findListSchedules(String date, String name);
+    List<ScheduleResponseDto> findScheduleListByDate(String date);
+
+    List<ScheduleResponseDto> findScheduleListByName(String name);
+
+    List<ScheduleResponseDto> findScheduleListByNameWithDate(String date, String name);
+
+    List<ScheduleResponseDto> findAllScheduleLists();
+
+    int updateSchedule(Long id, String name, String contents, LocalDateTime now);
+
 }
