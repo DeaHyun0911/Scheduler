@@ -30,6 +30,7 @@ public class ScheduleController {
         return new ResponseEntity<>(scheduleService.saveSchedule(requestDto), HttpStatus.CREATED);
     }
 
+
     /**
      * 선택 일정 조회 API
      * @param id 선택한 id 식별자
@@ -41,12 +42,18 @@ public class ScheduleController {
         return new ResponseEntity<>(scheduleService.findScheduleById(id), HttpStatus.OK);
     }
 
+    /**
+     *
+     * @param date yyyy-MM-dd 포멧의 날짜 값
+     * @param id 작성자 고유 식별 id
+     * @return
+     */
     @GetMapping("/lists")
     public ResponseEntity<List<ScheduleResponseDto>> findListSchedules(
             @RequestParam(required = false) String date,
-            @RequestParam(required = false) String name
+            @RequestParam(required = false) Long id
             ) {
-        return new ResponseEntity<>(scheduleService.findListSchedules(date, name), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.findListSchedules(date, id), HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
@@ -54,6 +61,12 @@ public class ScheduleController {
             @PathVariable Long id,
             @RequestBody ScheduleRequestDto requestDto
             ) {
-        return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto.getUserName(), requestDto.getContents(), requestDto.getPassword()), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto.getUserName(),requestDto.getContents(), requestDto.getPassword()), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id) {
+        scheduleService.deleteSchedule(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

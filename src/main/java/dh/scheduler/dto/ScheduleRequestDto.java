@@ -4,7 +4,11 @@ import lombok.Getter;
 @Getter
 public class ScheduleRequestDto {
 
+    private Long authorId;
+
     private String userName;
+
+    private String email;
 
     private String title;
 
