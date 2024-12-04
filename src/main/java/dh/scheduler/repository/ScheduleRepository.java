@@ -12,5 +12,12 @@ public interface ScheduleRepository {
 
     Schedule findScheduleById(Long id);
 
-    List<ScheduleResponseDto> findListSchedules(String date, String name);
+    List<ScheduleResponseDto> findScheduleListByDate(String date);
+
+    List<ScheduleResponseDto> findScheduleListByName(String name);
+
+    List<ScheduleResponseDto> findScheduleListByNameWithDate(String date, String name);
+
+    List<ScheduleResponseDto> findAllScheduleLists();
+
 }

@@ -63,9 +63,25 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public List<ScheduleResponseDto> findListSchedules(String date, String name) {
-        return jdbcTemplate.query("select * from Schedule where user_name = ? or date(update_date) = ?", scheduleRowMappers(), name, date);
+    public List<ScheduleResponseDto> findScheduleListByDate(String date) {
+        return jdbcTemplate.query("select * from Schedule where date(update_date) = ?", scheduleRowMappers(), date);
     }
+
+    @Override
+    public List<ScheduleResponseDto> findScheduleListByName(String name) {
+        return jdbcTemplate.query("select * from Schedule where user_name = ?", scheduleRowMappers(), name);
+    }
+
+    @Override
+    public List<ScheduleResponseDto> findScheduleListByNameWithDate(String date, String name) {
+        return jdbcTemplate.query("select * from Schedule where user_name = ? and date(update_date) = ?", scheduleRowMappers(), name, date);
+    }
+
+    @Override
+    public List<ScheduleResponseDto> findAllScheduleLists() {
+        return jdbcTemplate.query("select * from Schedule", scheduleRowMappers());
+    }
+
 
     private RowMapper<Schedule> scheduleRowMapper() {
         return new RowMapper<Schedule>() {

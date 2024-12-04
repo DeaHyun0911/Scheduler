@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,6 +44,24 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public List<ScheduleResponseDto> findListSchedules(String date, String name) {
 
-        return scheduleRepository.findListSchedules(date, name);
+        List<ScheduleResponseDto> findList = new ArrayList<>();
+
+        if(name == null || date == null) {
+            findList = scheduleRepository.findAllScheduleLists();
+        }
+
+        if(name != null || date != null) {
+            findList = scheduleRepository.findScheduleListByNameWithDate(date, name);
+        }
+
+        if (name != null) {
+            findList = scheduleRepository.findScheduleListByName(name);
+        }
+
+        if (date != null) {
+            findList = scheduleRepository.findScheduleListByDate(date);
+        }
+
+        return findList;
     }
 }
