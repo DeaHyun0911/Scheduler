@@ -1,5 +1,6 @@
 package dh.scheduler.dto;
 
+import dh.scheduler.entity.Author;
 import dh.scheduler.entity.Schedule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 public class ScheduleResponseDto {
 
     private Long id;
+    private Long author_id;
     private String userName;
     private String title;
     private String password;
@@ -18,13 +20,14 @@ public class ScheduleResponseDto {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    public ScheduleResponseDto(Schedule schedule) {
+    public ScheduleResponseDto(Schedule schedule, Author author) {
         this.id = schedule.getId();
-        this.userName = schedule.getUserName();
+        this.author_id = author.getId();
+        this.userName = author.getUserName();
         this.title = schedule.getTitle();
         this.password = schedule.getPassword();
         this.contents = schedule.getContents();
-        this.createDate = schedule.getCreateDate();
-        this.updateDate = schedule.getUpdateDate();
+        this.createDate = schedule.getCreatedAt();
+        this.updateDate = schedule.getUpdatedAt();
     }
 }

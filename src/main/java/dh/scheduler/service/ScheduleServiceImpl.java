@@ -2,15 +2,14 @@ package dh.scheduler.service;
 
 import dh.scheduler.dto.ScheduleRequestDto;
 import dh.scheduler.dto.ScheduleResponseDto;
+import dh.scheduler.entity.Author;
 import dh.scheduler.entity.Schedule;
 import dh.scheduler.repository.ScheduleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,22 +25,37 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public ScheduleResponseDto saveSchedule(ScheduleRequestDto requestDto) {
 
+        Author author = new Author(requestDto.getUserName());
+
+        author = scheduleRepository.saveAuthor(author);
+
         Schedule schedule = new Schedule(
-                requestDto.getUserName(),
+                author.getId(),
                 requestDto.getTitle(),
                 requestDto.getPassword(),
                 requestDto.getContents()
-                );
+        );
 
-        return scheduleRepository.saveSchedule(schedule);
+        schedule = scheduleRepository.saveSchedule(schedule);
+
+        return new ScheduleResponseDto(
+                schedule.getId(),
+                author.getId(),
+                author.getUserName(),
+                schedule.getTitle(),
+                schedule.getPassword(),
+                schedule.getContents(),
+                schedule.getCreatedAt(),
+                schedule.getUpdatedAt());
     }
 
     @Override
     public ScheduleResponseDto findScheduleById(Long id) {
 
         Schedule schedule = scheduleRepository.findScheduleById(id);
+        Author author = scheduleRepository.findAuthorById(id);
 
-        return new ScheduleResponseDto(schedule);
+        return new ScheduleResponseDto(schedule, author);
     }
 
     @Override
@@ -76,10 +90,24 @@ public class ScheduleServiceImpl implements ScheduleService{
         }
 
         LocalDateTime now = LocalDateTime.now();
-        scheduleRepository.updateSchedule(id, name, contents, now);
+        scheduleRepository.updateSchedule(id, contents, now);
         Schedule schedule = scheduleRepository.findScheduleById(id);
 
-        return new ScheduleResponseDto(schedule);
+        scheduleRepository.updateAuthor(schedule.getAuthorId(), name);
+        Author author = scheduleRepository.findAuthorById(id);
+
+        return new ScheduleResponseDto(schedule, author);
+
+    }
+
+    @Override
+    public void deleteSchedule(Long id) {
+
+        int deleteRow = scheduleRepository.deleteSchedule(id);
+
+        if (deleteRow == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id를 찾을 수 없습니다.");
+        }
     }
 
     @Override
