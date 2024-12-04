@@ -86,6 +86,11 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
         return jdbcTemplate.update("update Schedule set user_name = ?, contents = ?, update_date = ? where id = ?", name, contents, now, id);
     }
 
+    @Override
+    public int deleteSchedule(Long id) {
+        return jdbcTemplate.update("delete from Schedule where id = ?", id);
+    }
+
 
     private RowMapper<Schedule> scheduleRowMapper() {
         return new RowMapper<Schedule>() {
