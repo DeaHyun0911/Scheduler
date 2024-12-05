@@ -147,37 +147,3 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     }
     
 
-    private RowMapper<ScheduleResponseDto> scheduleRowMappers() {
-        return new RowMapper<ScheduleResponseDto>() {
-            @Override
-            public ScheduleResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new ScheduleResponseDto(
-                        rs.getLong("id"),
-                        rs.getLong("author_id"),
-                        rs.getString("user_name"),
-                        rs.getString("title"),
-                        rs.getString("password"),
-                        rs.getString("contents"),
-                        rs.getTimestamp("createdAt").toLocalDateTime(),
-                        rs.getTimestamp("updatedAt").toLocalDateTime()
-                );
-            }
-        };
-    }
-
-    private RowMapper<Author> authorRowMapper() {
-        return new RowMapper<Author>() {
-            @Override
-            public Author mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new Author(
-                        rs.getLong("id"),
-                        rs.getString("user_name"),
-                        rs.getTimestamp("createdAt").toLocalDateTime(),
-                        rs.getTimestamp("updatedAt").toLocalDateTime()
-                );
-            }
-        };
-    }
-    
-    
-}
