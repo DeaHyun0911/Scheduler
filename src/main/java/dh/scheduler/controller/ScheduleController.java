@@ -4,6 +4,9 @@ package dh.scheduler.controller;
 import dh.scheduler.dto.ScheduleRequestDto;
 import dh.scheduler.dto.ScheduleResponseDto;
 import dh.scheduler.service.ScheduleService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,46 +18,33 @@ import java.util.List;
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
-
     public ScheduleController(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 
-    /**
-     * 일정 생성 API
-     * @param requestDto 일정 생성 요청 객체
-     * @return JSON 응답
-     */
+
     @PostMapping
     public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto) {
         return new ResponseEntity<>(scheduleService.saveSchedule(requestDto), HttpStatus.CREATED);
     }
 
 
-    /**
-     * 선택 일정 조회 API
-     * @param id 선택한 id 식별자
-     * @return
-     */
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> findScheduleById(@PathVariable Long id) {
 
         return new ResponseEntity<>(scheduleService.findScheduleById(id), HttpStatus.OK);
     }
 
-    /**
-     *
-     * @param date yyyy-MM-dd 포멧의 날짜 값
-     * @param id 작성자 고유 식별 id
-     * @return
-     */
+
     @GetMapping("/lists")
     public ResponseEntity<List<ScheduleResponseDto>> findListSchedules(
             @RequestParam(required = false) String date,
-            @RequestParam(required = false) Long id
+            @RequestParam(required = false) Long id,
+            @PageableDefault(size = 10)Pageable pageable
             ) {
-        return new ResponseEntity<>(scheduleService.findListSchedules(date, id), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.findListSchedules(date, id, pageable), HttpStatus.OK);
     }
+
 
     @PatchMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> updateSchedule(
@@ -63,6 +53,7 @@ public class ScheduleController {
             ) {
         return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto.getUserName(),requestDto.getContents(), requestDto.getPassword()), HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSchedule(@PathVariable Long id) {
