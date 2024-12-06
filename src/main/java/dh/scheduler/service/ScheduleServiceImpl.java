@@ -4,6 +4,7 @@ import dh.scheduler.dto.ScheduleRequestDto;
 import dh.scheduler.dto.ScheduleResponseDto;
 import dh.scheduler.entity.Author;
 import dh.scheduler.entity.Schedule;
+import dh.scheduler.exception.passwordMismatchException;
 import dh.scheduler.repository.ScheduleRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -83,7 +84,7 @@ public class ScheduleServiceImpl implements ScheduleService{
     public ScheduleResponseDto updateSchedule(Long id, String userName, String contents, String password) {
 
         if (!password.equals(scheduleRepository.findScheduleById(id).getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 틀립니다.");
+            throw new passwordMismatchException(HttpStatus.BAD_REQUEST, "비밀번호가 틀립니다.");
         }
 
         LocalDateTime now = LocalDateTime.now();
@@ -100,13 +101,13 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 
     @Override
-    public void deleteSchedule(Long id) {
+    public void deleteSchedule(Long id, String password) {
 
-        int deleteRow = scheduleRepository.deleteSchedule(id);
-
-        if (deleteRow == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id를 찾을 수 없습니다.");
+        if (!password.equals(scheduleRepository.findScheduleById(id).getPassword())) {
+            throw new passwordMismatchException(HttpStatus.BAD_REQUEST, "비밀번호가 틀립니다.");
         }
+
+        scheduleRepository.deleteSchedule(id);
     }
 
 

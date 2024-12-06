@@ -81,7 +81,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     public Schedule findScheduleById(Long id) {
         List<Schedule> result = jdbcTemplate.query("select * from Schedule where id = ?", scheduleRowMapper(), id);
 
-        return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "id를 찾을 수 없습니다."));
+        return result.stream().findAny().orElseThrow();
     }
 
 
@@ -89,7 +89,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     public Author findAuthorById (Long id) {
         List<Author> result = jdbcTemplate.query("select * from author where id = ?", authorRowMapper(), id);
 
-        return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "id를 찾을 수 없습니다."));
+        return result.stream().findAny().orElseThrow();
     }
 
 
