@@ -8,23 +8,25 @@
 Request
 ```
 {
-  "user_name": "작성자1",
-  "password": "1234",
-  "title": "제목1",
-  "contents": "작성된 내용1"
+    "authorId": 1,
+    "email": "test@test.com",
+    "title": "오늘 할일",
+    "password": "12345678",
+    "contents": "해야될 일"
 }
 ```
 
 Response
 ```
 {
-    "schedule_id": "1",
-    "user_id": "1",
-    "user_name": "작성자1",
-    "title": "제목1",
-    "contents": "내용1",
-    "create_date": "생성된 날짜",
-    "edit_date": "수정된 날짜"
+    "id": 1,
+    "authorId": 1,
+    "userName": "진짜 이름",
+    "title": "오늘 할일",
+    "password": "12345678",
+    "contents": "해야될 일",
+    "createDate": "2024-12-06T12:30:20.26",
+    "updateDate": "2024-12-06T12:30:20.26"
 }
 ```
 
@@ -36,13 +38,14 @@ Response
 Response
 ```
 {
-    "schedule_id": {Id},
-    "user_id": "1",
-    "user_name": "작성자1",
+    "id": 1,
+    "authorId": 1,
+    "userName": "진짜 이름",
     "title": "제목1",
-    "contents": "내용1",
-    "create_date": "생성된 날짜",
-    "edit_date": "수정된 날짜"
+    "password": "12345678",
+    "contents": "",
+    "createDate": "2024-12-03T19:07:13",
+    "updateDate": "2024-12-06T11:48:55"
 }
 ```
 
@@ -54,24 +57,26 @@ Response
 Response
 ```
 [
-{
-    "schedule_id": "1",
-    "user_id": "1",
-    "user_name": "작성자1",
-    "title": "제목1",
-    "contents": "내용1",
-    "create_date": "생성된 날짜",
-    "edit_date": "수정된 날짜"
-},
-{
-    "schedule_id": "2",
-    "user_id": "1",
-    "user_name": "작성자1",
-    "title": "제목2",
-    "contents": "내용2",
-    "create_date": "생성된 날짜",
-    "edit_date": "수정된 날짜"
-}
+    {
+        "id": 1,
+        "authorId": 1,
+        "userName": "진짜 이름",
+        "title": "제목1",
+        "password": "1234",
+        "contents": "",
+        "createDate": "2024-12-03T19:07:13",
+        "updateDate": "2024-12-06T11:48:55"
+    },
+    {
+        "id": 2,
+        "authorId": 2,
+        "userName": "작성자2",
+        "title": "제목2",
+        "password": "1234",
+        "contents": "내용2",
+        "createDate": "2024-12-03T19:08:02",
+        "updateDate": "2024-12-04T16:13:56"
+    }
 ]
 ```
 
@@ -83,22 +88,23 @@ Response
 Request
 ```
 {
-    "password": "1234",
-    "title": "수정된 제목",
-    "contents": "수정된 내용"
+    "password": "12345678",
+    "userName": "수정된 작성자명",
+    "contents": "수정된 일정"
 }
 ```
 
 Response
 ```
 {
-    "schedule_id": "1",
-    "user_id": "1",
-    "user_name": "작성자1",
+    "id": 1,
+    "authorId": 1,
+    "userName": "수정된 작성자명",
     "title": "제목1",
-    "contents": "내용1",
-    "create_date": "생성된 날짜",
-    "edit_date": "수정된 날짜"
+    "password": "12345678",
+    "contents": "수정된 일정",
+    "createDate": "2024-12-03T19:07:13",
+    "updateDate": "2024-12-06T12:34:15"
 }
 ```
 
@@ -106,6 +112,13 @@ Response
 ### 4. 일정 삭제
 - Method: DELETE
 - URL: api/schedules/{id}
+
+Request
+```
+{
+    "password": "12345678"
+}
+```
 
 Response
 ```
